@@ -1,0 +1,47 @@
+services:
+  # Backend - mat2-web API
+  mat2-backend:
+    build:
+      context: ./mat2-web
+      dockerfile: Dockerfile.development
+    container_name: mat2-backend
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=development
+      - MAT2_ALLOW_ORIGIN_WHITELIST=*
+      - MAT2_MAX_FILES_BULK_DOWNLOAD=10
+      - MAT2_MAX_FILE_AGE_FOR_REMOVAL=60
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mat2-web:/mat2-web
+    restart: always
+    networks:
+      - mat2-network
+
+  # Frontend - mat2-quasar-frontend
+  mat2-frontend:
+    build:
+      context: ./mat2-quasar-frontend
+      dockerfile: ./Dockerfile.dev
+      target: build-stage
+    container_name: mat2-frontend
+    environment:
+      - MAT2_API_URL_DEV=http://localhost:5000/
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./mat2-quasar-frontend:/app
+    command: /bin/sh -c "yarn && npx quasar dev"
+    depends_on:
+      - mat2-backend
+    networks:
+      - mat2-network
+
+networks:
+  mat2-network:
+    driver: bridge
+
+volumes:
+  mat2-uploads:
+    driver: local

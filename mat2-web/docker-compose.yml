@@ -1,0 +1,17 @@
+version: '2'
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile.development
+        environment:
+            - FLASK_APP=main.py
+            - FLASK_ENV=development
+            - MAT2_ALLOW_ORIGIN_WHITELIST=*
+            - MAT2_MAX_FILES_BULK_DOWNLOAD=10
+            - MAT2_MAX_FILE_AGE_FOR_REMOVAL=60
+        ports:
+            - "5000:5000"
+        volumes:
+            - .:/mat2-web
+        restart: always

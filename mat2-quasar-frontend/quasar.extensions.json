@@ -1,0 +1,16 @@
+{
+  "@quasar/testing": {
+    "harnesses": [
+      "e2e-cypress",
+      "e2e-webdriver",
+      "quality",
+      "security",
+      "security-antivuln"
+    ]
+  },
+  "@quasar/testing-e2e-cypress": {
+    "options": [
+      "scripts"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  cypress:
+    image: "cypress/included:13.14.2"
+    entrypoint: ./test/wait-for-it.sh -t 0 mat2-web-frontend:8080 -- cypress run
+    networks:
+      - main
+    depends_on:
+      - mat2-web-frontend
+      - mat2-web-api
+    environment:
+      - CYPRESS_baseUrl=http://mat2-web-frontend:8080
+    working_dir: /e2e
+    volumes:
+      - ../:/e2e

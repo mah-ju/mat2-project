@@ -1,0 +1,60 @@
+# Build the needed css files in an intermediate container
+FROM node:20-buster AS static_web_assets_build
+WORKDIR /var/www/mat2-web
+COPY . /var/www/mat2-web
+RUN npm install \
+    && npm install --global postcss \
+    && npm run build:css
+# https://github.com/nginxinc/docker-nginx-unprivileged/blob/master/stable/buster/Dockerfile
+From debian:bullseye-slim
+
+LABEL maintainer="Mat-Web Co-Maintainer <jan.friedli@immerda.ch>"
+
+WORKDIR /var/www/mat2-web
+
+COPY . /var/www/mat2-web
+COPY --from=static_web_assets_build /var/www/mat2-web/static/dist ./static/dist
+
+ENV MAT2_WEB_DOWNLOAD_FOLDER /app/upload
+
+RUN set -x \
+    && addgroup --system --gid 101 nginx \
+    && adduser --system --disabled-login --ingroup nginx --no-create-home --home /nonexistent --gecos "nginx user" --shell /bin/false --uid 101 nginx \
+    && apt-get update \
+    && apt-get install --no-install-recommends --no-install-suggests -y \
+        ca-certificates \
+        nginx \
+        systemd \
+        ffmpeg \
+        mat2 \
+        gir1.2-gdkpixbuf-2.0 \
+        gir1.2-poppler-0.18 \
+        gir1.2-rsvg-2.0 \
+        libimage-exiftool-perl \
+        uwsgi \
+        uwsgi-plugin-python3 \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel \
+    && pip3 install -r requirements.txt \
+    && rm /etc/nginx/sites-enabled/default /etc/nginx/nginx.conf \
+    && cp ./config/nginx-default.conf /etc/nginx/sites-enabled/default \
+    && cp ./config/nginx.conf /etc/nginx/nginx.conf \
+    && cp ./config/uwsgi.config /etc/uwsgi/apps-enabled/mat2-web.ini \
+    && chown 101:101 /etc/uwsgi/apps-enabled/mat2-web.ini \
+    && mkdir -p /var/cache/nginx \
+    && chown -R 101:0 /var/cache/nginx \
+    && chmod -R g+w /var/cache/nginx \
+    && mkdir -p /var/www/mat2-web/static/.webassets-cache \
+    && chown -R 101:0 /var/www/mat2-web/static/.webassets-cache \
+    && chmod -R g+w /var/www/mat2-web/static/.webassets-cache \
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && rm -rf /var/cache/apt/* /var/lib/apt/lists/* \
+    && chown -R nginx:nginx .
+
+STOPSIGNAL SIGTERM
+
+USER 101
+
+CMD ["sh", "-c", "nginx; uwsgi --ini /etc/uwsgi/apps-enabled/mat2-web.ini;"]

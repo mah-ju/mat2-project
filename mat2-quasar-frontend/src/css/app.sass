@@ -1,0 +1,100 @@
+// app global css
+@font-face
+  font-family: rubik-regular
+  src: url(./font/Rubik/Rubik-Regular.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-regular-italic
+  src: url(./font/Rubik/Rubik-RegularItalic.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-bold
+  src: url(./font/Rubik/Rubik-Bold.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-bold-italic
+  src: url(./font/Rubik/Rubik-BoldItalic.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-black
+  src: url(./font/Rubik/Rubik-Black.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-black-italic
+  src: url(./font/Rubik/Rubik-BlackItalic.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-light
+  src: url(./font/Rubik/Rubik-Light.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-light-italic
+  src: url(./font/Rubik/Rubik-LightItalic.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-medium
+  src: url(./font/Rubik/Rubik-Medium.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-medium-italic
+  src: url(./font/Rubik/Rubik-MediumItalic.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-regular
+  src: url(./font/Rubik/Rubik-Regular.ttf)
+  font-display: swap
+@font-face
+  font-family: rubik-regular-italic
+  src: url(./font/Rubik/Rubik-RegularItalic.ttf)
+  font-display: swap
+
+.rubik-regular
+  font-family: 'rubik-regular'
+.rubik-regular-italic
+  font-family: 'rubik-regular-italic'
+.rubik-bold
+  font-family: 'rubik-bold'
+.rubik-bold-italic
+  font-family: 'rubik-bold-italic'
+.rubik-light
+  font-family: 'rubik-light'
+.rubik-light-italic
+  font-family: 'rubik-light-italic'
+.rubik-black
+  font-family: 'rubic-black'
+.rubik-black-italic
+  font-family: 'rubic-black-italic'
+.rubik-medium
+  font-family: 'rubik-medium'
+.rubik-medium-italic
+  font-family: 'rubik-medium-italic'
+
+h1, h2, h3, h4, h5, h6
+  font-family: 'rubik-light'
+  margin-top: 1rem
+  margin-bottom: 1rem
+  margin-left: 0px
+  margin-right: 0px
+body
+  font-family: 'rubik-regular'
+
+p
+  font-family: 'rubik-regular'
+  color: $light-font-color
+
+.mat-shadowed-box
+  -webkit-box-shadow: $shadow $shadow-color
+  -moz-box-shadow: $shadow $shadow-color
+  box-shadow: $shadow $shadow-color
+  border-radius: $border-radius
+
+a
+  color: $primary
+
+.border-top
+  margin-top: $standard-margin
+  border-top: 1px solid rgba($light-font-color, 0.2)
+
+// overwrite code styles
+.ssh-pre[data-type="shell"] .keyword
+  color: $secondary !important

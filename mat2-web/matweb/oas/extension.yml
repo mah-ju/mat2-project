@@ -1,0 +1,15 @@
+---
+tags:
+  - "Supported Extensions"
+summary: 'Returns a list of all supported file extensions'
+
+responses:
+  200:
+    description: "A list of all supported file extensions"
+    content:
+      application/json:
+        schema:
+          type: "array"
+          items:
+            type: "string"
+            example: ".jpeg"

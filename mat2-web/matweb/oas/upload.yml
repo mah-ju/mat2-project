@@ -1,0 +1,44 @@
+---
+tags:
+  - "File Upload (Metadata removal)"
+summary: 'Upload a single file which will be cleaned from metadata'
+requestBody:
+  description: "The file that will be cleaned from metadata. Note that the file must be base64 encoded"
+  required: true
+  content:
+    application/json:
+      schema:
+        type: "object"
+        properties:
+          file_name:
+            type: "string"
+            example: 'my_example.jpg'
+          file:
+            type: "string"
+            example: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='
+
+responses:
+  201:
+    description: "An object containing all info about the cleaned file"
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/UploadResponse'
+  400:
+    description: "Invalid input"
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/ErrorResponse'
+  415:
+    description: "Unsupported file type"
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/ErrorResponse'
+  500:
+    description: "Unable to clean the file"
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/ErrorResponse'

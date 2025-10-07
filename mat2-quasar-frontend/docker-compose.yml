@@ -1,0 +1,31 @@
+# for local development
+version: '3.7'
+services:
+  mat2-web-frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+      target: build-stage
+    environment:
+      - MAT2_API_URL_DEV=http://localhost:5000/
+    ports:
+      - '8080:8080'
+    volumes:
+      - '.:/app'
+    command: /bin/sh -c "yarn && npx quasar dev"
+
+  mat2-web-api:
+    # use latest on purpose to detect when backend changes
+    image: registry.0xacab.org/jvoisin/mat2-web:latest
+    ports:
+      - 5000:8080
+    security_opt:
+      - no-new-privileges
+    tmpfs:
+      - /tmp
+      - /run
+      - /var/run
+      - /var/cache
+      - /run/uwsgi
+      - /app/upload:exec,mode=777
+    read_only: true

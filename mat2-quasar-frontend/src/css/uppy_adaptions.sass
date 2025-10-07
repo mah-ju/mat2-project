@@ -1,0 +1,167 @@
+// uppy hackish overrides
+// mainly first screen
+.uppy-Root
+  .uppy-DashboardTab-btn
+    display: flex
+    flex: 1
+    flex-direction: column
+    align-items: center
+    width: auto !important
+    margin-bottom: 0 !important
+    padding: 0 !important
+    border-radius: 0 !important
+
+  .uppy-DashboardTabs-list .uppy-DashboardTab:first-child button
+    animation-name: rubberBand
+    animation-duration: .4s
+    animation-delay: 1s
+
+  .uppy-DashboardTab
+    margin-bottom: 0
+    margin-left: 15px
+    width: auto !important
+    border-bottom: 0
+  
+  .uppy-DashboardTab .uppy-DashboardTab-inner
+    display: none
+
+  .uppy-DashboardTabs-list
+    display: flex
+    flex-direction: row !important
+    flex-wrap: wrap
+    justify-content: center
+    max-width: 600px
+    overflow-x: initial
+    margin-top: 15px
+    padding-top: 0
+
+  .uppy-Dashboard-dropFilesTitle
+    font-size: $body-font-size !important
+    line-height: $body-line-height !important
+    color: $light-font-color !important
+
+  .uppy-DashboardTabs
+    flex-direction: column-reverse !important
+
+.uppy-DashboardTab .uppy-DashboardTab-btn
+  background-color: $light-blue
+  border-radius: 0
+  padding: 0
+  width: auto
+  border: 1px $shadow-color dashed
+
+  &:hover
+    background-color: darken($light-blue, 2.5%)
+
+  svg
+    display: none
+
+  &::before
+    content: ''
+    background-repeat: no-repeat
+    background-position: center center
+    background-size: 45px
+    height: 75px
+    width: 100px
+    position: relative
+
+  &:not([aria-controls])::before
+    background-image: url(../assets/upload.svg)
+
+  &[aria-controls="uppy-DashboardContent-panel--Webcam"]::before
+    background-image: url(../assets/camera.svg)
+    background-size: 40px
+
+  @keyframes rubberBand
+    from
+      transform: scale3d(1, 1, 1)
+    30%
+      transform: scale3d(1.25, 0.75, 1)
+    75%
+      transform: scale3d(1.05, 0.95, 1)
+    to
+      transform: scale3d(1, 1, 1)
+
+.uppy-DashboardTab-name
+  font-size: 0.8rem
+  color: $primary
+  padding-bottom: 0.8rem
+  font-weight: 650 !important
+  padding-left: 0.2rem
+  padding-right: 0.2rem
+
+// upload screen
+.uppy-Root
+  .uppy-DashboardItem
+    height: auto !important
+
+    &:last-child
+      margin-bottom: 0
+      border-bottom: 0
+
+  &.uppy-size--md, &.uppy-size-lg
+    .uppy-DashboardItem
+      height: auto !important
+
+      &:last-child
+        margin-bottom: 0
+        border-bottom: 0
+
+    .uppy-DashboardContent-bar
+      padding: 0
+
+    .uppy-DashboardItem-info
+      display: none
+
+.uppy-DashboardItem
+  height: auto !important
+
+  &:last-child
+    margin-bottom: 0
+    border-bottom: 0
+
+.uppy-Root .uppy-StatusBar:not([aria-hidden=true]).is-waiting
+  // border-top 0
+  .uppy-StatusBar .uppy-c-btn-primary
+    background-color: $primary !important
+    color: #fff !important
+
+  .uppy-StatusBar-actions
+    background-color: transparent !important
+    justify-content: center
+
+  .uppy-StatusBar::before
+    background-color: transparent !important
+
+.uppy-StatusBar-actionBtn--upload
+  width: 100% !important
+
+.download-btn
+  background-color: $primary !important
+  color: #fff !important
+
+.standard-padding
+  padding: $standard-padding
+
+.uppy-Dashboard-AddFiles-list
+  flex-direction: row !important
+  align-items: center
+  justify-content: center
+  margin-bottom: 1rem
+  flex: none !important
+
+.uppy-Dashboard-AddFiles-title
+  font-size: $body-font-size !important
+  line-height: $body-line-height !important
+  color: $light-font-color !important
+  text-align: center !important
+
+.uppy-Dashboard-AddFiles-info 
+  display: none !important
+
+@media (min-width: $breakpoint-lg-min)
+  .uppy-DashboardContent-back
+    padding-left: $standard-padding !important
+
+  .uppy-DashboardContent-addMore
+    padding-right: $standard-padding !important

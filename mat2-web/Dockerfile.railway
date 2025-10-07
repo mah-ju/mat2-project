@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     libcairo2-dev \
     libgirepository1.0-dev \
+    python3-gi \
+    python3-gi-cairo \
+    gir1.2-glib-2.0 \
     ffmpeg \
     mat2 \
     gir1.2-gdkpixbuf-2.0 \

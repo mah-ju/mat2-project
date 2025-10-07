@@ -5,6 +5,10 @@ WORKDIR /mat2-web
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    build-essential \
+    pkg-config \
+    libcairo2-dev \
+    libgirepository1.0-dev \
     ffmpeg \
     mat2 \
     gir1.2-gdkpixbuf-2.0 \

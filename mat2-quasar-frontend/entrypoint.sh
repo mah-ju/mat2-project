@@ -4,7 +4,7 @@
 echo "Replacing env vars in JS/HTML"
 cp -r /var/templates/* /var/www/html/
 
-echo "Set API Url to: $MAT_API_HOST_PLACEHOLDER"
+echo "Set API Url to: $MAT2_API_URL_PROD"
 for file in /var/www/html/**/*.js;
 do
   echo "Processing $file ...";
@@ -13,7 +13,7 @@ do
   if [ ! -f $file.tmpl.js ]; then
     cp $file $file.tmpl.js
   fi
-  envsubst '$MAT_API_HOST_PLACEHOLDER' < $file.tmpl.js > $file
+  envsubst '$MAT2_API_URL_PROD' < $file.tmpl.js > $file
   rm $file.tmpl.js
 done
 

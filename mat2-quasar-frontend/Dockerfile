@@ -1,52 +1,32 @@
-# ========== STAGE 1: BUILD ==========
-FROM node:20 AS build-stage
-
-LABEL maintainer="Mat2 Web Frontend Maintainer <jan.friedli@immerda.ch>"
+# Production build that actually works
+FROM node:20
 
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
+# Install Quasar CLI and dependencies
+RUN npm install -g @quasar/cli
 RUN npm install
 
-# Copy project files
+# Copy all project files
 COPY . .
 
-# Build Quasar project for production (PWA mode)
-# Use actual backend URL
+# Set environment variable for backend URL
 ENV MAT2_API_URL_PROD=https://mat2-project-production.up.railway.app/
-RUN npx quasar build -m pwa
 
-# ========== STAGE 2: PRODUCTION ==========
-FROM nginx:1.27.4-alpine
+# Build for production
+RUN quasar build -m pwa
 
-# Copy nginx configuration
-COPY nginx_config/default.conf /etc/nginx/conf.d/default.conf
-COPY nginx_config/nginx.conf /etc/nginx/nginx.conf
+# Install simple http server to serve the build
+RUN npm install -g serve
 
-# Copy entrypoint script
-COPY ./entrypoint.sh /
+# Change to dist directory
+WORKDIR /app/dist/pwa
 
-# Copy built files from build stage
-COPY --from=build-stage /app/dist/pwa /var/templates
-
-# Give execute permission to entrypoint
-RUN chmod +x /entrypoint.sh
-
-# Setup nginx directories and permissions
-RUN set -x \
-    && mkdir -p /var/cache/nginx /var/www/html \
-    && chown -R nginx:nginx /var/cache/nginx /var/www/html \
-    && chmod -R g+w /var/cache/nginx \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && ln -sf /dev/stderr /var/log/nginx/mat2-web-frontend-error.log \
-    && rm -rf /var/cache/apt/* /var/lib/apt/lists/*
-
+# Expose port
 EXPOSE 8080
 
-USER nginx
-
-CMD ["/entrypoint.sh"]
+# Serve the built app
+CMD ["serve", "-s", ".", "-l", "8080"]

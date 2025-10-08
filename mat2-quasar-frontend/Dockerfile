@@ -34,6 +34,9 @@ COPY ./entrypoint.sh /
 # Copy built files from build stage
 COPY --from=build-stage /app/dist/pwa /var/templates
 
+# Give execute permission to entrypoint
+RUN chmod +x /entrypoint.sh
+
 # Setup nginx directories and permissions
 RUN set -x \
     && mkdir -p /var/cache/nginx \

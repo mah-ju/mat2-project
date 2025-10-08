@@ -8,13 +8,8 @@ echo "Set API Url to: $MAT2_API_URL_PROD"
 for file in /var/www/html/**/*.js;
 do
   echo "Processing $file ...";
-
-  # Use the existing JS file as template
-  if [ ! -f $file.tmpl.js ]; then
-    cp $file $file.tmpl.js
-  fi
-  envsubst '$MAT2_API_URL_PROD' < $file.tmpl.js > $file
-  rm $file.tmpl.js
+  # Replace placeholder with actual API URL
+  sed -i "s|MAT2_API_URL_PROD_PLACEHOLDER|$MAT2_API_URL_PROD|g" "$file"
 done
 
 echo "Processing index.html ...";

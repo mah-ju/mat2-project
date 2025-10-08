@@ -14,11 +14,9 @@ RUN npm install
 # Copy project files
 COPY . .
 
-# Build argument for API URL (will be set from Railway)
-ARG MAT2_API_URL_PROD
-ENV MAT2_API_URL_PROD=${MAT2_API_URL_PROD}
-
 # Build Quasar project for production (PWA mode)
+# Use placeholder that will be replaced at runtime
+ENV MAT2_API_URL_PROD=MAT2_API_URL_PROD_PLACEHOLDER
 RUN npx quasar build -m pwa
 
 # ========== STAGE 2: PRODUCTION ==========

@@ -55,6 +55,9 @@ RUN set -x \
 
 STOPSIGNAL SIGTERM
 
+# Create uwsgi socket directory
+RUN mkdir -p /run/uwsgi && chown 101:101 /run/uwsgi
+
 USER 101
 
-CMD ["sh", "-c", "nginx; uwsgi --ini /etc/uwsgi/apps-enabled/mat2-web.ini;"]
+CMD ["sh", "-c", "mkdir -p /run/uwsgi && nginx && uwsgi --ini /etc/uwsgi/apps-enabled/mat2-web.ini"]

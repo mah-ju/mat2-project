@@ -39,8 +39,8 @@ RUN chmod +x /entrypoint.sh
 
 # Setup nginx directories and permissions
 RUN set -x \
-    && mkdir -p /var/cache/nginx \
-    && chown -R nginx:nginx /var/cache/nginx \
+    && mkdir -p /var/cache/nginx /var/www/html \
+    && chown -R nginx:nginx /var/cache/nginx /var/www/html \
     && chmod -R g+w /var/cache/nginx \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \

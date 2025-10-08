@@ -99,12 +99,12 @@ module.exports = function (ctx) {
       env: ctx.dev
         ? {
           API_URL: process.env.MAT2_API_URL_DEV,
-          MAX_UPLOAD_SIZE: process.env.MAX_UPLOAD_SIZE || 16777216,
+          MAX_UPLOAD_SIZE: process.env.MAX_UPLOAD_SIZE || 104857600,
           MAX_UPLOAD_FILES: process.env.MAX_UPLOAD_FILES || 10
       }
         : {
           API_URL: process.env.MAT2_API_URL_PROD,
-          MAX_UPLOAD_SIZE: process.env.MAX_UPLOAD_SIZE || 16777216,
+          MAX_UPLOAD_SIZE: process.env.MAX_UPLOAD_SIZE || 104857600,
           MAX_UPLOAD_FILES: process.env.MAX_UPLOAD_FILES || 10
         }
     },

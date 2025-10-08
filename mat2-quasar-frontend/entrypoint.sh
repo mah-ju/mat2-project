@@ -4,17 +4,21 @@
 echo "Replacing env vars in JS/HTML"
 cp -r /var/templates/* /var/www/html/
 
-echo "Set API Url to: $MAT2_API_URL_PROD"
+echo "Set API URL to: $MAT_API_HOST_PLACEHOLDER"
+echo "Set Frontend URL to: $FRONTEND_URL_PLACEHOLDER"
+
+# Replace API URL placeholder in all JS files
 for file in /var/www/html/**/*.js;
 do
   echo "Processing $file ...";
-  # Replace placeholder with actual API URL
-  sed -i "s|MAT2_API_URL_PROD_PLACEHOLDER|$MAT2_API_URL_PROD|g" "$file"
+  sed -i "s|MAT_API_HOST_PLACEHOLDER|$MAT_API_HOST_PLACEHOLDER|g" "$file"
+  sed -i "s|FRONTEND_URL_PLACEHOLDER|$FRONTEND_URL_PLACEHOLDER|g" "$file"
 done
 
 echo "Processing index.html ...";
-# Replace placeholder in index.html
-sed -i "s|MAT2_API_URL_PROD_PLACEHOLDER|$MAT2_API_URL_PROD|g" /var/www/html/index.html
+# Replace placeholders in index.html
+sed -i "s|MAT_API_HOST_PLACEHOLDER|$MAT_API_HOST_PLACEHOLDER|g" /var/www/html/index.html
+sed -i "s|FRONTEND_URL_PLACEHOLDER|$FRONTEND_URL_PLACEHOLDER|g" /var/www/html/index.html
 
 cat /var/www/html/index.html
 echo "Starting Nginx"

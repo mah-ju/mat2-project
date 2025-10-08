@@ -15,8 +15,8 @@ RUN npm install
 COPY . .
 
 # Build Quasar project for production (PWA mode)
-# Use placeholder that will be replaced at runtime
-ENV MAT2_API_URL_PROD=MAT2_API_URL_PROD_PLACEHOLDER
+# Use placeholders that will be replaced at runtime
+ENV MAT2_API_URL_PROD=MAT_API_HOST_PLACEHOLDER
 RUN npx quasar build -m pwa
 
 # ========== STAGE 2: PRODUCTION ==========

@@ -55,8 +55,8 @@ RUN set -x \
 
 STOPSIGNAL SIGTERM
 
-# Create uwsgi socket directory
-RUN mkdir -p /run/uwsgi && chown 101:101 /run/uwsgi
+# Create uwsgi socket directory and upload folder
+RUN mkdir -p /run/uwsgi /app/upload && chown 101:101 /run/uwsgi /app/upload
 
 USER 101
 

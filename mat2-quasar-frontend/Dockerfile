@@ -1,4 +1,4 @@
-# Simple production build for Railway
+# Development mode for Railway testing
 FROM node:20
 
 WORKDIR /app
@@ -10,20 +10,13 @@ COPY package*.json ./
 RUN npm install -g @quasar/cli
 RUN npm install
 
-# Copy project
+# Copy all files
 COPY . .
 
-# Build for production
-ENV MAT_API_HOST_PLACEHOLDER=https://mat2-project-production.up.railway.app/
-ENV FRONTEND_URL_PLACEHOLDER=https://charming-charisma-production.up.railway.app/
-RUN quasar build -m pwa
-
-# Serve with simple http server
-RUN npm install -g http-server
-
-WORKDIR /app/dist/pwa
+# Set environment variable for API
+ENV MAT2_API_URL_DEV=https://mat2-project-production.up.railway.app/
 
 EXPOSE 8080
 
-CMD ["http-server", "-p", "8080", "-a", "0.0.0.0"]
-
+# Run in dev mode (hot reload)
+CMD ["quasar", "dev"]
